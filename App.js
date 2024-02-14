@@ -3,6 +3,8 @@ import { StatusBar } from "expo-status-bar";
 import { StyleSheet, Text, View } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
+import { createNativeStackNavigator } from "@react-navigation/native-stack";
+
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 import { Button, useTheme } from "react-native-paper";
 
@@ -11,6 +13,32 @@ import DetailsScreen from "./Pages/DetailsScreen";
 import LikesPage from "./Pages/LikesPage";
 
 const Tab = createBottomTabNavigator();
+const Stack = createNativeStackNavigator();
+
+const HomeStack = ({ likedCocktails = {}, setLikedCocktails = () => {} }) => {
+  return (
+    <Stack.Navigator>
+      <Stack.Screen
+        name="Home"
+        children={({ navigation }) => (
+          <HomeScreen
+            navigation={navigation}
+            likedCocktails={likedCocktails}
+            setLikedCocktails={setLikedCocktails}
+          />
+        )}
+        options={{ title: "Homzaee", headerShown: false }}
+      />
+      <Stack.Screen
+        name="Details"
+        children={({ route, navigation }) => (
+          <DetailsScreen navigation={navigation} route={route} />
+        )}
+        options={{ title: "Details" }}
+      />
+    </Stack.Navigator>
+  );
+};
 
 export default function App() {
   const [likedCocktails, setLikedCocktails] = useState({});
@@ -32,9 +60,8 @@ export default function App() {
       >
         <Tab.Screen
           name="Home"
-          children={({ navigation }) => (
-            <HomeScreen
-              navigation={navigation}
+          children={() => (
+            <HomeStack
               likedCocktails={likedCocktails}
               setLikedCocktails={setLikedCocktails}
             />

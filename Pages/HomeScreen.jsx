@@ -7,7 +7,6 @@ import {
   ActivityIndicator,
 } from "react-native";
 
-
 // Components
 import VerticalScroll from "../Components/VerticalScroll";
 
@@ -82,7 +81,7 @@ const HomeScreen = ({
                 cocktail.strIngredient15,
               ]}
               onPress={() => {
-                navigation.navigate("DetailsScreen", {
+                navigation.navigate("Details", {
                   cocktail,
                   isLiked: isLikedCocktail(cocktail),
                   handleLike: () => handleLike(cocktail),
